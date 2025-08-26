@@ -78,36 +78,41 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # --- Chat Input ---
-query = st.chat_input("Ask a question about the webpage...")
-if query.lower() == "exit":
-    st.write("Thank you, see you soon 👋")
-    st.stop()
-if query and "retriever" in st.session_state:
-    # Append user message
-    st.session_state.messages.append({"role": "user", "content": query})
+query = st.chat_input("Ask a question about the webpage...", key="chat_input")
 
-    # Build history context
-    history_context = "\n".join(
-        [f"{m['role'].capitalize()}: {m['content']}" for m in st.session_state.messages]
-    )
+if query:
+    if query.lower() == "exit":
+        st.write("Thank you, see you soon 👋")
+        st.stop()
 
-    # Retrieve relevant docs
-    results = st.session_state.retriever.invoke(query)
-    docs_context = "\n".join([doc.page_content for doc in results])
+    if "retriever" in st.session_state:
+        # Append user message
+        st.session_state.messages.append({"role": "user", "content": query})
 
-    # Format prompt
-    formatted_prompt = qa_prompt.format(
-        history=history_context,
-        context=docs_context if docs_context.strip() else "No relevant text found.",
-        question=query
-    )
+        # Build history context
+        history_context = "\n".join(
+            [f"{m['role'].capitalize()}: {m['content']}" for m in st.session_state.messages]
+        )
 
-    # Call LLM
-    ans = st.session_state.model.invoke(formatted_prompt)
-    response = ans.content
+        # Retrieve relevant docs
+        results = st.session_state.retriever.invoke(query)
+        docs_context = "\n".join([doc.page_content for doc in results])
 
-    # Append AI response
-    st.session_state.messages.append({"role": "assistant", "content": response})
+        # Format prompt
+        formatted_prompt = qa_prompt.format(
+            history=history_context,
+            context=docs_context if docs_context.strip() else "No relevant text found.",
+            question=query
+        )
+
+        # Call LLM
+        ans = st.session_state.model.invoke(formatted_prompt)
+        response = ans.content
+
+        # Append AI response
+        st.session_state.messages.append({"role": "assistant", "content": response})
+    else:
+        st.info("Please load a webpage first from the sidebar.")
 
 # --- Display Chat ---
 for msg in st.session_state.messages:
@@ -115,7 +120,7 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 
-'''
-Since my working directory different from the env directory so
-To run the scripts run this in terminal ""c:\DATA SCIENCE\GEN AI\LangChain\Langchain Models\venv\Scripts\python.exe" -m  streamlit run app.py"
-'''
+# '''
+# Since my working directory different from the venv directory so
+# To run the scripts run this in terminal ""c:\DATA SCIENCE\GEN AI\LangChain\Langchain Models\venv\Scripts\python.exe" -m  streamlit run app.py"
+# '''
