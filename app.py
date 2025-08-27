@@ -8,7 +8,6 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
 # --- Page Config ---
@@ -18,12 +17,14 @@ st.write("Ask questions based on the content of a webpage!")
 
 # --- Sidebar Config ---
 st.sidebar.header("Settings")
-url = st.sidebar.text_input("Enter webpage URL:",
-                            value="https://python.langchain.com/docs/integrations/tools/")
+url = st.sidebar.text_input(
+    "Enter webpage URL:",
+    value="https://python.langchain.com/docs/integrations/tools/"
+)
 
 if st.sidebar.button("Load Webpage"):
     with st.spinner("🔎 Loading and processing webpage..."):
-        # Load documents
+        # Load webpage
         loader = WebBaseLoader(url)
         documents = loader.load()
 
@@ -31,17 +32,20 @@ if st.sidebar.button("Load Webpage"):
         splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
         docs = splitter.split_documents(documents)
 
-        # Initialize embeddings
-        os.environ["TRANSFORMERS_NO_TF"] = "1"   # Disable TensorFlow usage in HuggingFace
-        embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
+        # Use lightweight embeddings (better for Render free tier)
+        os.environ["TRANSFORMERS_NO_TF"] = "1"   # disable TensorFlow usage in HF
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
         # Create FAISS vector DB
         vector_store = FAISS.from_documents(docs, embedding=embeddings)
 
-        # Save to session state
+        # Save to disk (instead of keeping fully in memory)
+        vector_store.save_local("faiss_index")
+
+        # Save retriever to session state
         st.session_state.retriever = vector_store.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 3, "lambda_mult": 0.5}
+            search_kwargs={"k": 2, "lambda_mult": 0.5}  # reduced k to save memory
         )
         st.success("✅ Webpage loaded and indexed!")
 
@@ -49,7 +53,7 @@ if st.sidebar.button("Load Webpage"):
 # --- Initialize Model ---
 if "model" not in st.session_state:
     st.session_state.model = ChatGroq(
-        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        model="llama-3.1-8b-instant",   # smaller + faster than 17B
         temperature=0.5,
         max_tokens=512,
     )
@@ -89,9 +93,9 @@ if query:
         # Append user message
         st.session_state.messages.append({"role": "user", "content": query})
 
-        # Build history context
+        # Limit history (last 3 messages only to save memory)
         history_context = "\n".join(
-            [f"{m['role'].capitalize()}: {m['content']}" for m in st.session_state.messages]
+            [f"{m['role'].capitalize()}: {m['content']}" for m in st.session_state.messages[-3:]]
         )
 
         # Retrieve relevant docs
@@ -121,6 +125,6 @@ for msg in st.session_state.messages:
 
 
 # '''
-# Since my working directory different from the venv directory so
-# To run the scripts run this in terminal ""c:\DATA SCIENCE\GEN AI\LangChain\Langchain Models\venv\Scripts\python.exe" -m  streamlit run app.py"
+# To run locally (adjust path to your venv):
+# "c:\DATA SCIENCE\GEN AI\LangChain\Langchain Models\venv\Scripts\python.exe" -m streamlit run app.py
 # '''
