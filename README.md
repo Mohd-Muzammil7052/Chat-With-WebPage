@@ -6,14 +6,24 @@ This repository also includes example notebooks demonstrating basic RAG with bot
 
 📑 Table of Contents
 
-    Introduction
-    Features
-    Installation
-    Usage
-    Project Structure
-    Configuration
-    Examples
-    Dependencies
-    Troubleshooting
-    Contributors
-    License
+Introduction
+
+Features
+
+Installation
+
+Usage
+
+Project Structure
+
+Configuration
+
+Examples
+
+Dependencies
+
+Troubleshooting
+
+Contributors
+
+License
