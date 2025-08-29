@@ -141,7 +141,7 @@ lxml == 6.0.1
 
 ## 📄 License  
 
-This project is licensed under the [MIT License]([./LICENSE](https://opensource.org/license/mit)).  
+This project is licensed under the [MIT License](https://opensource.org/license/mit).  
 Feel free to use, modify, and distribute it as needed.
 
 ---
