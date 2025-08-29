@@ -46,12 +46,17 @@ You can either:
 
 ---
 
-## ⚙️ Installation  
+## 🚀 Installation  
 
 Clone the repo and install dependencies:  
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-name>
+git clone <https://github.com/Mohd-Muzammil7052/Chat-With-WebPage.git>
+cd <Chat-With-WebPage>
 pip install -r requirements.txt
+
+---
+
+## ⚙️ Setup
+
 
