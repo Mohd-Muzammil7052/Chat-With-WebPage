@@ -7,19 +7,19 @@ This repository also includes example notebooks demonstrating basic RAG with bot
 ---
 
 ## 📑 Table of Contents
-- [Introduction](#introduction)  
-- [Features](#features)  
-- [Installation](#installation)
-- [Setup](#setup)  
-- [Usage](#usage)
-- [Jupyter Notebooks](#jupyternotebooks)
-- [Tech Stack](#techstack)
-- [Requirements](#requirements)
-- [Project Structure](#project-structure)
-- [License](#license)    
-- [Contributors](#contributors)
-- [Acknowledgments](#acknowledgements)
-- [Contact](#contact)  
+- [Introduction](#-introduction)  
+- [Features](#-features)  
+- [Installation](#-installation)
+- [Setup](#-setup)  
+- [Usage](#-usage)
+- [Jupyter Notebooks](#-jupyternotebooks)
+- [Tech Stack](#-techstack)
+- [Requirements](#-requirements)
+- [Project Structure](#-project-structure)
+- [License](#-license)    
+- [Contributors](#-contributors)
+- [Acknowledgments](#-acknowledgements)
+- [Contact](#-contact)  
 
 
 ---
