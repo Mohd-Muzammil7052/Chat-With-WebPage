@@ -126,7 +126,7 @@ lxml == 6.0.1
 
 ```text
 📦 Chat-With-WebPage
- ┣ 📜 README.md                  # Documentation
+ ┣ 📜 README.md                   # Documentation
  ┣ 📜 app.py                      # Streamlit chatbot app
  ┣ 📜 basic_web_rag.ipynb         # RAG with Webpages (Notebook)
  ┣ 📜 basic_wikipedia_rag.ipynb   # RAG with Wikipedia (Notebook)
@@ -138,7 +138,7 @@ lxml == 6.0.1
 
 ## 📄 License  
 
-This project is licensed under the [MIT License](./LICENSE).  
+This project is licensed under the [MIT License]([./LICENSE](https://opensource.org/license/mit)).  
 Feel free to use, modify, and distribute it as needed.
 
 ---
