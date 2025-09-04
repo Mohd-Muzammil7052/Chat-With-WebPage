@@ -5,6 +5,8 @@ A Retrieval-Augmented Generation (RAG) chatbot built with **Streamlit** and **La
 This repository also includes example notebooks demonstrating basic RAG with both **web content** and **Wikipedia**.  
 
 ---
+## Live Application - [Live](https://chat-with-webpage-dr4obqfsbwpvxbbbnlpaob.streamlit.app/)
+---
 
 ## 📑 Table of Contents
 - [Introduction](#-introduction)  
